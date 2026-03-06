@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Samzz Store - Top Up FF Diamonds & Membership Murah Instan</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --bg: #0a0e17;
+      --card: #111827ee;
+      --accent-green: #10b981;
+      --accent-blue: #3b82f6;
+      --accent-blue-glow: rgba(59,130,246,0.7); /* lebih cerah biru neon */
+      --text: #f3f4f6;
+      --muted: #9ca3af;
+      --border: #1f2937;
+      --glow-green: rgba(16,185,129,0.4);
+      --disabled: #4b5563;
+    }
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      background: linear-gradient(to bottom, #0a0e17, #0f172a);
+    }
+    .container { max-width: 460px; margin: 0 auto; padding: 12px; padding-bottom: 100px; } /* beri ruang bawah untuk tombol fixed */
+
+    /* Banner (sama) */
+    .banner {
+      position: relative;
+      height: 260px;
+      background: url('https://wallpapers.com/images/hd/free-fire-banner-with-complete-cast-5vfv6tj9bc7x37rw.jpg') center/cover no-repeat;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    }
+    .banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 40%, rgba(10,14,23,0.85) 100%);
+    }
+    .banner-content {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      right: 20px;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .banner-logo {
+      width: 80px;
+      height: 80px;
+      background: rgba(0,0,0,0.4);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid rgba(255,255,255,0.3);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      margin-bottom: 12px;
+      transition: transform 0.3s;
+    }
+    .banner-logo:hover { transform: scale(1.08); }
+    .banner-logo img { width: 100%; height: 100%; object-fit: cover; }
+    .banner-text h1 { font-size: 1.8rem; margin: 0 0 8px 0; text-shadow: 0 2px 10px black; }
+    .info-tags { display: flex; gap: 12px; font-size: 0.9rem; }
+    .tag { background: rgba(255,255,255,0.15); padding: 4px 10px; border-radius: 20px; backdrop-filter: blur(4px); }
+
+    .section {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px; /* dikurangi supaya e-wallet lebih naik */
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+      transition: transform 0.3s;
+    }
+    .section:last-child { margin-bottom: 100px; } /* beri ruang ekstra di bawah e-wallet */
+
+    .step-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .step-num {
+      width: 36px;
+      height: 36px;
+      background: var(--accent-green);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      box-shadow: 0 0 15px var(--glow-green);
+    }
+
+    input {
+      width: 50%;
+      padding: 14px 16px;
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: white;
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+    input:focus {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 4px rgba(59,130,246,0.2);
+    }
+
+    .paket-accordion { margin-top: 12px; }
+    .paket-header {
+      background: #0f172a;
+      padding: 14px 16px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 1px solid transparent;
+    }
+    .paket-header:hover, .paket-header.active {
+      background: rgba(59,130,246,0.1); /* biru subtle saat hover */
+      border-color: var(--accent-blue);
+    }
+    .paket-header .custom-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid var(--muted);
+      transition: all 0.3s;
+    }
+    .paket-header.active .custom-icon {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 12px var(--accent-blue-glow);
+    }
+    .paket-header .custom-icon img { width: 100%; height: 100%; object-fit: cover; }
+    .paket-header span { flex: 1; font-weight: 600; }
+    .paket-header i.chevron { transition: transform 0.3s; }
+    .paket-header.active i.chevron { transform: rotate(180deg); }
+
+    .paket-content {
+      opacity: 0;
+      transform: translateY(-15px);
+      max-height: 0;
+      overflow: hidden;
+      transition: opacity 0.35s ease, transform 0.35s ease, max-height 0.45s ease;
+      padding: 0 16px;
+    }
+    .paket-content.show {
+  opacity: 1;
+  transform: translateY(0);
+  max-height: 400px;   /* tinggi maksimal */
+  overflow-y: auto;    /* aktifkan scroll */
+  padding-right: 6px;  /* biar gak kepotong scrollbar */
+}
+  .paket-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.paket-content::-webkit-scrollbar-thumb {
+  background: #3b82f6;
+  border-radius: 10px;
+}
+
+.paket-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .option-card {
+      background: #1e293b;
+      padding: 14px 10px;
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 2px solid transparent;
+    }
+    .option-card:hover,
+    .option-card.selected {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 25px var(--accent-blue-glow);
+      transform: scale(1.06);
+    }
+    .option-card strong { display: block; font-size: 1.1rem; margin-top: 6px; }
+    .option-card small { color: var(--muted); font-size: 0.85rem; }
+    .option-card img { width: 50px; height: 50px; object-fit: contain; }
+
+    .btn-wa {
+      position: fixed;
+      bottom: 16px;
+      left: 16px;
+      right: 16px;
+      max-width: 460px;
+      margin: 0 auto;
+      padding: 14px;
+      font-size: 1.05rem;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+      border-radius: 12px;
+      transition: all 0.3s;
+    }
+    .btn-wa:disabled {
+      background: var(--disabled);
+      color: #9ca3af;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+    .btn-wa:not(:disabled) {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      box-shadow: 0 8px 25px rgba(16,185,129,0.5);
+    }
+    .btn-wa:not(:disabled):hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(16,185,129,0.7);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Banner -->
+  <div class="banner">
+    <div class="banner-content">
+      <div class="banner-logo">
+        <img src="ff.jpg" alt="Samzz Logo">
+      </div>
+      <div class="banner-text">
+        <h1>Free Fire Diamonds & Membership</h1>
+        <div class="info-tags">
+          <span class="tag"><i class="fas fa-globe"></i> Garena</span>
+          <span class="tag"><i class="fas fa-user-Time"></i> ⏳ 5 - 10 menit</span>
+          <span class="tag"><i class="fas fa-user-ninja"></i> 24 Jam</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 1 -->
+  <div class="section">
+    <div class="step-title">
+      <div class="step-num">1</div>
+      Masukan ID Akun Anda
+    </div>
+    <input type="text" id="idFF" placeholder="Masukkan ID " maxlength="12" pattern="[0-9]*" inputmode="numeric"/>
+  </div>
+
+  <!-- Step 2: Pilih Paket -->
+  <div class="section">
+    <div class="step-title">
+      <div class="step-num">2</div>
+      Pilih Paket
+    </div>
+    <div class="paket-accordion">
+      <div class="paket-header" data-target="diamond">
+        <div class="custom-icon">
+          <img src="berlian.png" alt="Diamonds">
+        </div>
+        <span>Diamonds</span>
+        <i class="fas fa-chevron-down chevron"></i>
+      </div>
+      <div class="paket-content" id="diamond">
+        <div class="option-grid">
+          <div class="option-card" data-value="5 💎" data-price="Rp 1.000"><strong>5 💎</strong><small>Rp 1.000</small></div>
+          <div class="option-card" data-value="10 💎" data-price="Rp 1.000"><strong>10 💎</strong><small>Rp 1.500</small></div>
+          <div class="option-card" data-value="12 💎" data-price="Rp 1.800"><strong>12 💎</strong><small>Rp 1.800</small></div>
+          <div class="option-card" data-value="15 💎" data-price="Rp 2.500"><strong>15 💎</strong><small>Rp 2.500</small></div>
+          <div class="option-card" data-value="20  💎 " data-price="RP 3.000" ><strong>20 💎</strong><small>RP 3.000</small></div>
+          <div class="option-card" data-value="25  💎 " data-price="RP 3.500" ><strong>25 💎</strong><small>RP 3.500</small></div>
+          <div class="option-card" data-value="30  💎 " data-price="RP 4.500" ><strong>30 💎</strong><small>RP 4.500</small></div>
+          <div class="option-card" data-value="40  💎 " data-price="RP 5.000" ><strong>40 💎</strong><small>RP 5.000</small></div>
+          <div class="option-card" data-value="55  💎 " data-price="RP 7.500" ><strong>55 💎</strong><small>RP 7.500</small></div>
+          <div class="option-card" data-value="60  💎 " data-price="RP 8.300" ><strong>60 💎</strong><small>RP 8.300</small></div>
+          <div class="option-card" data-value="70  💎 " data-price="RP 9.000" ><strong>70 💎</strong><small>RP 9.000</small></div>
+          <div class="option-card" data-value="75  💎 " data-price="RP 10.000" ><strong>75 💎</strong><small>RP 10.000</small></div>
+          <div class="option-card" data-value="80  💎 " data-price="RP 11.000" ><strong>80 💎</strong><small>RP 11.000</small></div>
+          <div class="option-card" data-value="90  💎 " data-price="RP 13.000" ><strong>90 💎</strong><small>RP 13.000</small></div>
+          <div class="option-card" data-value="90  💎 " data-price="RP 14.000" ><strong>95 💎</strong><small>RP 14.000</small></div>
+          <div class="option-card" data-value="100 💎 " data-price="RP 15.000" ><strong>100 💎</strong><small>RP 15.000</small></div>
+          <div class="option-card" data-value="140  💎 " data-price="RP 19.000" ><strong>140 💎</strong><small>RP 19.000</small></div>
+          <div class="option-card" data-value="160  💎 " data-price="RP 22.000" ><strong>160 💎</strong><small>RP 22.000</small></div>
+          <div class="option-card" data-value="200  💎 " data-price="RP 28.000" ><strong>200 💎</strong><small>RP 28.000</small></div>
+          <div class="option-card" data-value="250  💎 " data-price="RP 35.000" ><strong>250 💎</strong><small>RP 35.000</small></div>
+          <div class="option-card" data-value="300  💎 " data-price="RP 41.000" ><strong>300 💎</strong><small>RP 41.000</small></div>
+          <div class="option-card" data-value="355  💎 " data-price="RP 47.000" ><strong>355 💎</strong><small>RP 47.000</small></div>
+          <div class="option-card" data-value="400  💎 " data-price="RP 55.000" ><strong>400 💎</strong><small>RP 55.000</small></div>
+          <div class="option-card" data-value="455  💎 " data-price="RP 62.000" ><strong>455 💎</strong><small>RP 62.000</small></div>
+          <div class="option-card" data-value="500 💎 " data-price="RP 66.000" ><strong>500 💎</strong><small>RP 66.000</small></div>
+          <div class="option-card" data-value="550  💎 " data-price="RP 74.000" ><strong>550 💎</strong><small>RP 74.000</small></div>
+          <div class="option-card" data-value="600 💎 " data-price="RP 81.000" ><strong>600💎</strong><small>RP 81.000</small></div>
+          <div class="option-card" data-value="655  💎 " data-price="RP 87.000" ><strong>655 💎</strong><small>RP 87.000</small></div>
+          <div class="option-card" data-value="700 💎 " data-price="RP 93.000" ><strong>700 💎</strong><small>RP 93.000</small></div>
+          <div class="option-card" data-value="770 💎 " data-price="RP 100.000" ><strong>760 💎</strong><small>RP 100.000</small></div>
+          <div class="option-card" data-value="800 💎 " data-price="RP 104.000" ><strong>800 💎</strong><small>RP 104.000</small></div>
+          <div class="option-card" data-value="860 💎 " data-price="RP 112.000" ><strong>860 💎</strong><small>RP 112.000</small></div>
+          <div class="option-card" data-value="930 💎 " data-price="RP 121.000" ><strong>940 💎</strong><small>RP 121.000</small></div>
+          <div class="option-card" data-value="1000 💎 " data-price="RP 130.000" ><strong>1000 💎</strong><small>RP 130.000</small></div>
+          <div class="option-card" data-value="1050 💎 " data-price="RP 137.500" ><strong>1050 💎</strong><small>RP 137.500</small></div>
+          <div class="option-card" data-value="1075 💎 " data-price="RP 139.000" ><strong>1075 💎</strong><small>RP 139.000</small></div>
+          <div class="option-card" data-value="1080 💎 " data-price="RP 140.000" ><strong>1080 💎</strong><small>RP 140.000</small></div>
+          <div class="option-card" data-value="1125 💎 " data-price="RP 147.000" ><strong>1125 💎</strong><small>RP 147.000</small></div>
+          <div class="option-card" data-value="1145 💎 " data-price="RP 148.700" ><strong>1145 💎</strong><small>RP 148.000</small></div>
+          <div class="option-card" data-value="1200 💎 " data-price="RP 157.000" ><strong>1200 💎</strong><small>RP 157.000</small></div>
+          <div class="option-card" data-value="1215 💎 " data-price="RP 158.000" ><strong>1215 💎</strong><small>RP 158.000</small></div>
+          <div class="option-card" data-value="1300 💎 " data-price="RP 170.000" ><strong>1300 💎</strong><small>RP 170.000</small></div>
+          
+        </div>
+      </div>
+
+      <div class="paket-header" data-target="membership">
+        <div class="custom-icon">
+          <img src="Membership.jpg" alt="Membership">
+        </div>
+        <span>Membership</span>
+        <i class="fas fa-chevron-down chevron"></i>
+      </div>
+      <div class="paket-content" id="membership">
+        <div class="option-grid">
+          <div class="option-card" data-value="Mingguan" data-price="Rp 30.000"><strong>Mingguan</strong><small>Rp 30.000</small></div>
+          <div class="option-card" data-value="Bulanan" data-price="Rp 87.000"><strong>Bulanan</strong><small>Rp 87.000</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3: Pilih Pembayaran (agak dinaikkan) -->
+  <div class="section">
+    <div class="step-title">
+      <div class="step-num">3</div>
+      Pilih Pembayaran
+    </div>
+    <div class="paket-accordion">
+      <div class="paket-header" data-target="ewallet">
+        <i class="fas fa-wallet" style="font-size:1.8rem; color:var(--muted);"></i>
+        <span>E-Wallet</span>
+        <i class="fas fa-chevron-down chevron"></i>
+      </div>
+      <div class="paket-content" id="ewallet">
+        <div class="option-grid">
+          <div class="option-card" data-method="DANA">
+            <img src="dana.jpg" alt="DANA">
+            <strong>DANA</strong>
+          </div>
+          <div class="option-card" data-method="OVO">
+            <img src="ovo.jpg" alt="OVO">
+            <strong>OVO</strong>
+          </div>
+          <div class="option-card" data-method="GoPay">
+            <img src="gopay.jpg" alt="GoPay">
+            <strong>GoPay</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn-wa" id="btnBayar" disabled>Bayar via WA</button>
+
+</div>
+
+<script>
+  const idInput = document.getElementById('idFF');
+  const btnBayar = document.getElementById('btnBayar');
+
+  idInput.addEventListener('input', () => {
+    checkComplete();
+  });
+
+  document.querySelectorAll('.paket-header').forEach(header => {
+    header.addEventListener('click', () => {
+      const targetId = header.dataset.target;
+      const content = document.getElementById(targetId);
+      const chevron = header.querySelector('.chevron');
+
+      document.querySelectorAll('.paket-content.show').forEach(c => {
+        if (c !== content) c.classList.remove('show');
+      });
+      document.querySelectorAll('.paket-header.active').forEach(h => {
+        if (h !== header) h.classList.remove('active');
+      });
+
+      content.classList.toggle('show');
+      header.classList.toggle('active');
+      chevron.style.transform = content.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0deg)';
+      checkComplete();
+    });
+  });
+
+  document.querySelectorAll('.option-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const parent = card.closest('.option-grid');
+      parent.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      checkComplete();
+    });
+  });
+
+  function checkComplete() {
+    const idValid = idInput.value.trim().length >= 8;
+    const paketSelected = document.querySelector('.paket-content.show .option-card.selected') || document.querySelector('.paket-content .option-card.selected');
+    const walletSelected = document.querySelector('#ewallet .option-card.selected');
+
+    btnBayar.disabled = !(idValid && paketSelected && walletSelected);
+  }
+
+  btnBayar.addEventListener('click', () => {
+    const id = idInput.value.trim();
+    const paketCard = document.querySelector('.paket-content .option-card.selected');
+    const paket = paketCard ? paketCard.dataset.value : 'Unknown';
+    const walletCard = document.querySelector('#ewallet .option-card.selected');
+    const wallet = walletCard ? walletCard.dataset.method : 'Unknown';
+
+    const msg = `Halo Admin Samzz Store! 🔥%0A` +
+                `Pesanan Top Up:%0A` +
+                `ID: ${id}%0A` +
+                `Paket: ${paket}%0A` +
+                `Pembayaran: ${wallet}%0A` +
+                `Segera proses kak, thanks banyak! 💎`;
+
+    window.open(`https://wa.me/6283119064881?text=${msg}`, '_blank');
+  });
+</script>
+
+</body>
+</html>
