@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Samzz Store - Top Up Game Murah & Cepat</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --card: #1a1a1a;
+      --text: #e0e0e0;
+      --accent: #00aaff;
+      --accent-dark: #0077cc;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacOSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* Header / Navbar */
+    header {
+      position: sticky;
+      top: 0;
+      background: #111;
+      padding: 10px 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1000;
+      border-bottom: 1px solid #222;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    .search-bar {
+      flex: 1;
+      margin: 0 15px;
+      position: relative;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 10px 40px 10px 15px;
+      border: none;
+      border-radius: 25px;
+      background: #222;
+      color: white;
+      font-size: 0.95rem;
+    }
+
+    .search-bar i {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #888;
+    }
+
+    .right-menu {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .currency {
+      background: #222;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .menu-btn {
+      font-size: 1.4rem;
+      cursor: pointer;
+    }
+
+    /* Banner Hero */
+    .hero-banner {
+      width: 100%;
+      height: 140px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .banner-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 20px;
+      color: white;
+      text-shadow: 0 2px 6px black;
+      background: linear-gradient(to right, rgba(0,0,0,0.6), transparent);
+    }
+
+    .banner-text h2 {
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+    }
+
+    .banner-text p {
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+
+    .btn-yellow {
+      background: #ffdd00;
+      color: black;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: inline-block;
+    }
+
+    /* Sections */
+    .section {
+      padding: 20px 15px;
+    }
+
+    .section-title {
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  display: inline-block;
+  background: #1a1a1a;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border-left: 4px solid #00aaff;
+  color: #ffffff;   /* warna text putih */
+  font-weight: 600;
+}
+
+    .section-title i {
+      color: #ff9500;
+    }
+
+  body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  background: linear-gradient(135deg, #020617 50%, #0f172a 50%);
+  background-attachment: fixed; /* ini yang membuat background tidak ikut scroll */
+
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+    /* Cards */
+    .cards-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+    }
+
+    .card img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+    }
+
+    .card-info {
+      padding: 10px;
+      text-align: center;
+    }
+
+    .card-info p {
+      font-size: 0.9rem;
+      color: #aaa;
+      margin-top: 4px;
+    }
+
+    /* Rekomendasi - horizontal scroll */
+    .rekomendasi .cards-container {
+      grid-template-columns: repeat(3, minmax(160px, 1fr));
+      overflow-x: auto;
+      gap: 15px;
+      padding-bottom: 10px;
+    }
+
+    .rekomendasi .card img {
+      height: 160px;
+    }
+
+    /* WhatsApp Float */
+    .wa-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #25D366;
+      color: white;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+      z-index: 999;
+      text-decoration: none;
+    }
+
+    @media (min-width: 768px) {
+      .cards-container { grid-template-columns: repeat(4, 1fr); }
+      .rekomendasi .cards-container { grid-template-columns: repeat(6, minmax(160px, 1fr)); overflow-x: hidden; }
+      header { padding: 12px 5%; }
+      .search-bar { max-width: 400px; margin: 0 auto; }
+    }
+  
+  /* WhatsApp Float - Hanya Gambar Custom, Tanpa Background Hijau */
+.wa-float {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 65px;               /* ukuran lingkaran/button */
+  height: 65px;
+  border-radius: 50%;
+  overflow: hidden;          /* pastikan gambar ikut bulat */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);  /* bayangan soft biar nggak flat */
+  z-index: 999;
+  text-decoration: none;
+  background: transparent;   /* <-- ini yang penting: hilangkan background hijau! */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.wa-float:hover {
+  transform: scale(1.12);    /* zoom kecil pas hover */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+}
+
+.wa-float img {
+  width: 100%;               /* gambar memenuhi lingkaran */
+  height: 100%;
+  object-fit: cover;         /* biar gambar nggak distort */
+  border-radius: 50%;        /* pastikan gambar juga bulat */
+}
+
+/* Optional: tambah border tipis putih biar gambar lebih pop di background gelap */
+.wa-float.custom-wa {
+  border: 2px solid rgba(255,255,255,0.7);  /* semi-transparan putih */
+}
+
+/* Kalau mau efek glow ringan (opsional) */
+.wa-float:hover {
+  box-shadow: 0 0 0 8px rgba(37, 211, 102, 0.25);  /* glow hijau tipis WA */
+}
+
+.game-link {
+  display: block;                /* agar <a> berperilaku seperti block */
+  text-decoration: none;
+  color: inherit;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.game-link:active {
+  transform: scale(0.94);        /* efek mengecil saat ditekan */
+  box-shadow: 0 4px 12px rgba(0, 170, 255, 0.3);
+}
+
+/* Optional: efek ripple (lingkaran menyebar saat klik) */
+.game-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  background: rgba(0, 170, 255, 0.25);   /* warna accent kamu */
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: all 0.6s;
+  pointer-events: none;
+}
+
+/* TEXT BERJALAN BIRU */
+.running-text {
+  width: 100%;
+  overflow: hidden;
+  background: #0a0a0a;
+  border-bottom: 1px solid #222;
+  padding: 8px 0;
+}
+
+.running-text span {
+  display: inline-block;
+  white-space: nowrap;
+  padding-left: 100%;
+  animation: runningText 50s linear infinite;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #00aaff;
+}
+
+@keyframes runningText {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="slogo.png" alt="samz logo">
+  </div>
+
+  <div class="search-bar">
+    <input type="text" placeholder="Cari game atau produk...">
+    <i class="fas fa-search"></i>
+  </div>
+
+  <div class="right-menu">
+    <div class="currency">
+      <span>ID</span> / <strong>IDR</strong>
+    </div>
+    <div class="menu-btn"><i class="fas fa-bars"></i></div>
+  </div>
+</header>
+
+<div class="hero-banner">
+  <img src="banner.jpg" alt="Samz Store Banner">
+</div>
+ 
+<div class="running-text">
+  <span>
+  🔥 SELAMAT DATANG DI Samzz Store 🔥 ⚠️ Tokoh Samz Store kami sedang dalam masa pengembangan Sehingga produk tidak telalu banyak dan proses pemesanannya masih Manual yang akan di proses oleh admin kami mohon Bersabar ya 🙏🏻☺️. Mohon dukungan dan support dari kalian semua🙏 agar website ini bisa terus berkembang. Terima kasih atas support kalian🙏🏻☺️! ⚠️
+  </span>
+</div>
+  
+<div class="section rekomendasi">
+  <div class="section-title">✨ REKOMENDASI</div>
+  <p style="color:#aaa; margin-bottom:15px; font-size:0.95rem;">
+    Berikut adalah beberapa produk yang kami rekomendasikan untuk kamu.
+  </p>
+  <div class="cards-container">
+    <div class="card">
+      <a href="formff.html" class="card game-link" data-game="freefire">
+      <img src="ff.jpg" alt="Free Fire">
+      <div class="card-info">
+        <strong>Free Fire</strong>
+        <p>Garena</p>
+      </div>
+      </a>
+    </div>
+    <div class="card">
+      <img src="Call Of Duty.png" alt="Call of Duty Mobile">
+      <div class="card-info">
+        <strong>Call of Duty Mobile</strong>
+        <p>Garena</p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="ml.jpg" alt="Mobile Legends">
+      <div class="card-info">
+        <strong>Mobile Legends</strong>
+        <p>Moonton</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title"><i class=""></i> PRODUK </div>
+  <p style="color:#aaa; margin-bottom:15px; font-size:0.95rem;">
+  </p>
+  <div class="cards-container">
+    <div class="card">
+      <img src="pg.jpg" alt="PUBG">
+      <div class="card-info">
+        <strong>PUBG</strong>
+        <p>Tencent Games</p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="Mobile Legends.png" alt="Mobile Legends">
+      <div class="card-info">
+        <strong>Mobile Legends</strong>
+        <p>Moonton</p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="magic ches.jpg" alt="Magic Chess">
+      <div class="card-info">
+        <strong>Magic Chess : Go...</strong>
+        <p>Vizta Games</p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="hok.jpg" alt="Honor of Kings">
+      <div class="card-info">
+        <strong>Honor of Kings</strong>
+        <p>Tencent Games</p>
+      </div>
+    </div>
+    <div class="card">
+      <a href="formff.html" class="card game-link" data-game="freefire">
+      <img src="ff.jpg" alt="Free Fire">
+      <div class="card-info">
+        <strong>Free Fire</strong>
+        <p>Garena</p>
+      </div>
+      </a>
+    </div>
+    <div class="card">
+      <img src="Call Of Duty.png" alt="Call Of">
+      <div class="card-info">
+        <strong>Call Of Duty</strong>
+        <p>Garena</p>
+      </div>
+    </div>
+    <!-- Tambah card lain sesuai kebutuhan -->
+  </div>
+</div>
+
+<a href="https://wa.me/6283119064881?text=HALO%20Admin%20Samzz%20Store" class="wa-float custom-wa">
+  <img src="s1logo.png" alt="Chat via WhatsApp" />
+</a>
+
+</body>
+</html>
+
+<script>
+// Bisa pakai class atau data-attribute
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('click', function(e) {
+    // Optional: tambah efek visual dulu sebelum redirect
+    this.style.transform = 'scale(0.94)';
+    this.style.boxShadow = '0 8px 25px rgba(0,170,255,0.4)';
+    
+    // Ambil info game (bisa dari data-attribute atau dari teks)
+    const gameName = this.querySelector('strong').textContent.trim().toLowerCase();
+    
+    let targetPage = '';
+    
+    // Mapping sederhana (sesuaikan dengan nama file form kamu)
+    if (gameName.includes('free fire')) {
+      targetPage = 'formff.html';
+    } else if (gameName.includes('mobile legends') || gameName.includes('ml')) {
+      targetPage = 'formml.html';
+    } else if (gameName.includes('call of duty') || gameName.includes('cod')) {
+      targetPage = 'formcod.html';
+    } else if (gameName.includes('pubg')) {
+      targetPage = 'formpubg.html';
+    } else if (gameName.includes('honor of king')) {
+      targetPage = 'formhok.html';
+    } else if (gameName.includes('magic ches')) {
+      targetPage = 'formmc.html';
+    } 
+    // tambah game lain sesuai kebutuhan
+    
+    if (targetPage) {
+      // Delay sedikit biar animasi kelihatan (200-300ms)
+      setTimeout(() => {
+        window.location.href = targetPage;
+      }, 220);
+    }
+  });
+});
+</script>
